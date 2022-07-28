@@ -1,0 +1,19 @@
+name: 'Is this a release?'
+description: "This action checks to see if the .version key in a repository's package.json has changed in order to determine if this commit is a release commit"
+
+outputs:
+  IS_RELEASE:
+    description: 'Is this a release? can be either "true" or "false".'
+    value: ${{ steps.is-release.outputs.IS_RELEASE }}
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: ${{ github.sha }}
+        # we need this commit + the last so we can compare below
+        fetch-depth: 2
+    - id: is-release
+      shell: bash
+      run: ${{ github.action_path }}/scripts/is-release.sh ${{ github.event.before }}
