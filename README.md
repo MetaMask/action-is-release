@@ -20,5 +20,11 @@ jobs:
       - uses: MetaMask/action-is-release@v1.0
         id: is-release
 ```
+You can then add filters in following jobs so those will skip if the `IS_RELEASE` criteria isn't met:
 
-
+```yaml
+publish-release:
+    if: needs.is-release.outputs.IS_RELEASE == 'true'
+    runs-on: ubuntu-latest
+    needs: is-release
+```
