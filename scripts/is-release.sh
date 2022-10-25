@@ -15,8 +15,8 @@ VERSION_BEFORE="$(git show "$BEFORE":package.json | jq --raw-output .version)"
 VERSION_AFTER="$(jq --raw-output .version package.json)"
 if [[ "$VERSION_BEFORE" == "$VERSION_AFTER" ]]; then
   echo "Notice: version unchanged. Skipping release."
-  echo "::set-output name=IS_RELEASE::false"
+  echo "IS_RELEASE=false" >> $GITHUB_OUTPUT
   exit 0
 fi
  
-echo "::set-output name=IS_RELEASE::true"
+echo "IS_RELEASE=true" >> $GITHUB_OUTPUT
