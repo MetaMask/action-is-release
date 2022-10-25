@@ -9,7 +9,7 @@ outputs:
 runs:
   using: 'composite'
   steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         ref: ${{ github.sha }}
         # we need this commit + the last so we can compare below
