@@ -11,8 +11,8 @@ This action checks to see if the `.version` key in a repository's `package.json`
 ```yaml
 jobs:
   is-release:
-    # release merge commits come from GitHub user
-    if: github.event.head_commit.committer.name == 'GitHub'
+    # Filter by commits made by the author "github-actions"
+    if: github.event.head_commit.author.name == 'github-actions'
     outputs:
       IS_RELEASE: ${{ steps.is-release.outputs.IS_RELEASE }}
     runs-on: ubuntu-latest
