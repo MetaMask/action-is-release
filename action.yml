@@ -1,6 +1,11 @@
 name: 'Is this a release?'
 description: "This action checks to see if the .version key in a repository's package.json has changed in order to determine if this commit is a release commit"
 
+inputs:
+  commit-starts-with:
+    description: "Validate that the release commit starts with this string. Use '[version]' to refer to the current release version."
+    required: false
+
 outputs:
   IS_RELEASE:
     description: 'Is this a release? can be either "true" or "false".'
@@ -16,4 +21,4 @@ runs:
         fetch-depth: 2
     - id: is-release
       shell: bash
-      run: ${{ github.action_path }}/scripts/is-release.sh ${{ github.event.before }}
+      run: ${{ github.action_path }}/scripts/is-release.sh "${{ github.event.before }}" "${{ inputs.commit-starts-with }}"
