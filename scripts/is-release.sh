@@ -22,7 +22,7 @@ elif [[ -n $COMMIT_STARTS_WITH ]]; then
   EXPECTED_COMMIT_PREFIX="${COMMIT_STARTS_WITH//\[version\]/$VERSION_AFTER}"
   COMMIT_MESSAGE="$(git log --max-count=1 --format=%s)"
   if [[ ! $COMMIT_MESSAGE =~ ^$EXPECTED_COMMIT_PREFIX ]]; then
-    echo "Notice: commit message does not match expected format. Skipping release."
+    echo "Notice: commit message does not start with \"${COMMIT_STARTS_WITH}\". Skipping release."
     echo "IS_RELEASE=false" >> $GITHUB_OUTPUT
     exit 0
   fi
