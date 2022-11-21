@@ -3,7 +3,7 @@ description: "This action checks to see if the .version key in a repository's pa
 
 inputs:
   commit-starts-with:
-    description: "Validate that the release commit starts with this string. Use '[version]'' to refer to the current release version."
+    description: "Validate that the release commit starts with this string. Use '[version]' to refer to the current release version."
     required: false
 
 outputs:
