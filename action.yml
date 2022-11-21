@@ -21,4 +21,4 @@ runs:
         fetch-depth: 2
     - id: is-release
       shell: bash
-      run: ${{ github.action_path }}/scripts/is-release.sh ${{ github.event.before }} ${{ inputs.commit-starts-with }}
+      run: ${{ github.action_path }}/scripts/is-release.sh "${{ github.event.before }}" "${{ inputs.commit-starts-with }}"
