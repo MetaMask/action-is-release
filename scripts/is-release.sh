@@ -22,7 +22,7 @@ elif [[ -n $COMMIT_STARTS_WITH ]]; then
   COMMIT_MESSAGE="$(git log --max-count=1 --format=%s)"
   match_found=false
 
-  IFS=';' read -ra RAW_PREFIXES <<< "${COMMIT_STARTS_WITH}"
+  IFS=',' read -ra RAW_PREFIXES <<< "${COMMIT_STARTS_WITH}"
   for RAW_PREFIX in "${RAW_PREFIXES[@]}"; do
     EXPECTED_COMMIT_PREFIX="${RAW_PREFIX//\[version\]/$VERSION_AFTER}"
     if [[ $COMMIT_MESSAGE =~ ^$EXPECTED_COMMIT_PREFIX ]]; then
