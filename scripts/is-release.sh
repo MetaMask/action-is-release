@@ -23,8 +23,8 @@ elif [[ -n $COMMIT_STARTS_WITH ]]; then
   match_found=false
 
   IFS=';' read -ra RAW_PREFIXES <<< "${COMMIT_STARTS_WITH}"
-  for i in "${RAW_PREFIX[@]}"; do
-    EXPECTED_COMMIT_PREFIX="${COMMIT_STARTS_WITH//\[version\]/$VERSION_AFTER}"
+  for RAW_PREFIX in "${RAW_PREFIXES[@]}"; do
+    EXPECTED_COMMIT_PREFIX="${RAW_PREFIX//\[version\]/$VERSION_AFTER}"
     if [[ $COMMIT_MESSAGE =~ ^$EXPECTED_COMMIT_PREFIX ]]; then
       match_found=true
       break;
