@@ -31,7 +31,7 @@ elif [[ -n $COMMIT_STARTS_WITH ]]; then
     fi
   done
 
-  if [[ ! $match_found ]]; then
+  if [[ $match_found == false ]]; then
       echo "Notice: commit message does not start with \"${COMMIT_STARTS_WITH}\". Skipping release."
       echo "IS_RELEASE=false" >> $GITHUB_OUTPUT
   fi
