@@ -19,12 +19,21 @@ if [[ "$VERSION_BEFORE" == "$VERSION_AFTER" ]]; then
   echo "IS_RELEASE=false" >> $GITHUB_OUTPUT
   exit 0
 elif [[ -n $COMMIT_STARTS_WITH ]]; then
-  EXPECTED_COMMIT_PREFIX="${COMMIT_STARTS_WITH//\[version\]/$VERSION_AFTER}"
   COMMIT_MESSAGE="$(git log --max-count=1 --format=%s)"
-  if [[ ! $COMMIT_MESSAGE =~ ^$EXPECTED_COMMIT_PREFIX ]]; then
-    echo "Notice: commit message does not start with \"${COMMIT_STARTS_WITH}\". Skipping release."
-    echo "IS_RELEASE=false" >> $GITHUB_OUTPUT
-    exit 0
+  match_found=false
+
+  IFS=';' read -ra RAW_PREFIXES <<< "${COMMIT_STARTS_WITH}"
+  for i in "${RAW_PREFIX[@]}"; do
+    EXPECTED_COMMIT_PREFIX="${COMMIT_STARTS_WITH//\[version\]/$VERSION_AFTER}"
+    if [[ $COMMIT_MESSAGE =~ ^$EXPECTED_COMMIT_PREFIX ]]; then
+      match_found=true
+      break;
+    fi
+  done
+
+  if [[ ! $match_found ]]; then
+      echo "Notice: commit message does not start with \"${COMMIT_STARTS_WITH}\". Skipping release."
+      echo "IS_RELEASE=false" >> $GITHUB_OUTPUT
   fi
 fi
 
