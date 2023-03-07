@@ -8,7 +8,7 @@ Check whether the current commit is a release commit. Primarily this action look
 
 ## Usage
 
-## Basic usage
+### Basic usage
 
 This will look at the current commit, comparing it to `github.event.before` to see whether the `version` field of the `package.json` file in the root directory of the repository has changed. If the version has been updated, `IS_RELEASE` will be set to `true`. Otherwise, it will be set to `false`.
 
@@ -59,6 +59,35 @@ jobs:
 
 This will set `IS_RELEASE` to `true` if triggered on a commit where the package version changed, and where the commit message starts with "Release [new package version]" (e.g "Release 1.0.0", if the package version was updated to "1.0.0").
 
+### With specific commit message body prefix
+
+Here is an example of how to use the `commit-body-starts-with` option.
+
+```yaml
+jobs:
+  is-release:
+    outputs:
+      IS_RELEASE: ${{ steps.is-release.outputs.IS_RELEASE }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: MetaMask/action-is-release@v1.0
+        id: is-release
+        with:
+          commit-body-starts-with: 'Release [version]'
+```
+
+This behaves the same as the `commit-starts-with` option but ignores the title of the commit message.
+
+For example, the below commit message would result in `IS_RELEASE` set to `true`, assuming the package version had still been changed.
+
+```
+Merge pull request #123 from release/1.0.0
+
+Release 1.0.0
+```
+
+This can be used to identify release commits that are also merge commits and therefore have a fixed title format.
+
 ### Conditionally running release jobs
 
 You can then add filters in following jobs so those will skip if the `IS_RELEASE` criteria isn't met:
@@ -73,4 +102,21 @@ jobs:
     needs: is-release
 ```
 
+### Alternate package directories
 
+If the relevant version is not defined in the `package.json` in the root directory, an alternate directory can be specified using the `package-dir` option.
+
+```yaml
+jobs:
+  is-release:
+    outputs:
+      IS_RELEASE: ${{ steps.is-release.outputs.IS_RELEASE }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: MetaMask/action-is-release@v1.0
+        id: is-release
+        with:
+          package-dir: 'packages/some-workspace'
+```
+
+This can be used to identify release commits in monorepos that contain multiple packages and therefore multiple `package.json` files with alternate versions.
