@@ -5,6 +5,13 @@ inputs:
   commit-starts-with:
     description: "Validate that the release commit starts with this string. Use '[version]' to refer to the current release version."
     required: false
+  commit-body-starts-with:
+    description: "Validate that the release commit body starts with this string. Use '[version]' to refer to the current release version."
+    required: false
+  package-dir:
+    description: "Directory containing the package.json file with the relevant version. For example, a monorepo workspace directory."
+    required: false
+    default: "."
 
 outputs:
   IS_RELEASE:
@@ -21,4 +28,4 @@ runs:
         fetch-depth: 2
     - id: is-release
       shell: bash
-      run: ${{ github.action_path }}/scripts/is-release.sh "${{ github.event.before }}" "${{ inputs.commit-starts-with }}"
+      run: ${{ github.action_path }}/scripts/is-release.sh "${{ github.event.before }}" "${{ inputs.commit-starts-with }}" "${{ inputs.commit-body-starts-with }}" "${{ inputs.package-dir }}"
