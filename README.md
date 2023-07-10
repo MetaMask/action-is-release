@@ -59,6 +59,8 @@ jobs:
 
 This will set `IS_RELEASE` to `true` if triggered on a commit where the package version changed, and where the commit message starts with "Release [new package version]" (e.g "Release 1.0.0", if the package version was updated to "1.0.0").
 
+This field can support multiple patterns separated by a comma. For example, if `commit-starts-with` is set to `Release [version],Release/[version]`, it will match on both "Release 1.0.0" and "Release/1.0.0".
+
 ### Conditionally running release jobs
 
 You can then add filters in following jobs so those will skip if the `IS_RELEASE` criteria isn't met:
