@@ -16,7 +16,7 @@ VERSION_BEFORE="$(git show "$BEFORE":package.json | jq --raw-output .version)"
 VERSION_AFTER="$(jq --raw-output .version package.json)"
 if [[ "$VERSION_BEFORE" == "$VERSION_AFTER" ]]; then
   echo "Notice: version unchanged. Skipping release."
-  echo "IS_RELEASE=false" >> $GITHUB_OUTPUT
+  echo "IS_RELEASE=false" >> "$GITHUB_OUTPUT"
   exit 0
 elif [[ -n $COMMIT_STARTS_WITH ]]; then
   COMMIT_MESSAGE="$(git log --max-count=1 --format=%s)"
@@ -33,9 +33,9 @@ elif [[ -n $COMMIT_STARTS_WITH ]]; then
 
   if [[ $match_found == false ]]; then
       echo "Notice: commit message does not start with \"${COMMIT_STARTS_WITH}\". Skipping release."
-      echo "IS_RELEASE=false" >> $GITHUB_OUTPUT
+      echo "IS_RELEASE=false" >> "$GITHUB_OUTPUT"
       exit 0
   fi
 fi
 
-echo "IS_RELEASE=true" >> $GITHUB_OUTPUT
+echo "IS_RELEASE=true" >> "$GITHUB_OUTPUT"
