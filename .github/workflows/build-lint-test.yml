@@ -14,6 +14,7 @@ jobs:
         uses: fearphage/shellcheck-action@95d2a3d34d381a7314c286ea1725ca8cce3b51fd
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEBUG_ACTION: true
 
   all-tests-pass:
     runs-on: ubuntu-20.04
