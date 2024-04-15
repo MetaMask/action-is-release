@@ -19,7 +19,7 @@ jobs:
       IS_RELEASE: ${{ steps.is-release.outputs.IS_RELEASE }}
     runs-on: ubuntu-latest
     steps:
-      - uses: MetaMask/action-is-release@v1.0
+      - uses: MetaMask/action-is-release@v2
         id: is-release
 ```
 
@@ -36,7 +36,7 @@ jobs:
       IS_RELEASE: ${{ steps.is-release.outputs.IS_RELEASE }}
     runs-on: ubuntu-latest
     steps:
-      - uses: MetaMask/action-is-release@v1.0
+      - uses: MetaMask/action-is-release@v2
         id: is-release
 ```
 
@@ -51,7 +51,7 @@ jobs:
       IS_RELEASE: ${{ steps.is-release.outputs.IS_RELEASE }}
     runs-on: ubuntu-latest
     steps:
-      - uses: MetaMask/action-is-release@v1.0
+      - uses: MetaMask/action-is-release@v2
         id: is-release
         with:
           commit-starts-with: 'Release [version]'
