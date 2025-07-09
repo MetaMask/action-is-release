@@ -13,8 +13,8 @@ if [[ -z $BEFORE ]]; then
 fi
 
 # SemVer comparison function
-# Returns: 0 if version1 < version2, 1 otherwise
-semver-version-lt() {
+# Returns: 1 if version1 > version2, 0 otherwise
+semver-version-gt() {
   local version1="$1"
   local version2="$2"
 
@@ -32,28 +32,28 @@ semver-version-lt() {
   local v2_patch="${v2_parts[2]:-0}"
 
   # Compare major version
-  if [[ "$v1_major" -lt "$v2_major" ]]; then
-    return 0  # version1 < version2
-  elif [[ "$v1_major" -gt "$v2_major" ]]; then
+  if [[ "$v1_major" -gt "$v2_major" ]]; then
     return 1  # version1 > version2
+  elif [[ "$v1_major" -lt "$v2_major" ]]; then
+    return 0  # version1 < version2
   fi
 
   # Major versions are equal, compare minor
-  if [[ "$v1_minor" -lt "$v2_minor" ]]; then
-    return 0  # version1 < version2
-  elif [[ "$v1_minor" -gt "$v2_minor" ]]; then
+  if [[ "$v1_minor" -gt "$v2_minor" ]]; then
     return 1  # version1 > version2
+  elif [[ "$v1_minor" -lt "$v2_minor" ]]; then
+    return 0  # version1 < version2
   fi
 
   # Minor versions are equal, compare patch
-  if [[ "$v1_patch" -lt "$v2_patch" ]]; then
-    return 0  # version1 < version2
-  elif [[ "$v1_patch" -gt "$v2_patch" ]]; then
+  if [[ "$v1_patch" -gt "$v2_patch" ]]; then
     return 1  # version1 > version2
+  elif [[ "$v1_patch" -lt "$v2_patch" ]]; then
+    return 0  # version1 < version2
   fi
 
   # All parts are equal (version1 == version2)
-  return 1
+  return 0
 }
 
 VERSION_BEFORE="$(git show "$BEFORE":package.json | jq --raw-output .version)"
@@ -63,7 +63,7 @@ if "$VERSION_BEFORE" == "$VERSION_AFTER"; then
   echo "Version unchanged, so this is not a release commit."
   echo "IS_RELEASE=false" >> $GITHUB_OUTPUT
   exit 0
-elif semver-version-lt "$VERSION_BEFORE" "$VERSION_AFTER"; then
+elif semver-version-gt "$VERSION_BEFORE" "$VERSION_AFTER"; then
   echo "Version downgraded, so this is a release rollback."
   echo "IS_RELEASE=false" >> $GITHUB_OUTPUT
   echo "COMMIT_TYPE=release-rollback" >> $GITHUB_OUTPUT
