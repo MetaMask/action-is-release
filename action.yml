@@ -1,4 +1,4 @@
-name: 'Is this a release or a release rollback?'
+name: "Is this a release or a release rollback?"
 description: "This action checks to see if the .version key in a repository's package.json has changed in order to determine if this commit is a release or release rollback commit."
 
 inputs:
@@ -11,11 +11,11 @@ outputs:
     description: 'Is this a release? Can be either "true" or "false". (Deprecated in favor of COMMIT_TYPE.)'
     value: ${{ steps.is-release.outputs.IS_RELEASE }}
   COMMIT_TYPE:
-    description: 'What kind of commit is this? Can be "release", "release-rollback", or unset.'
+    description: 'What kind of commit is this? Can be "release", "release-rollback", or "normal".'
     value: ${{ steps.is-release.outputs.COMMIT_TYPE }}
 
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - uses: actions/checkout@v4
       with:

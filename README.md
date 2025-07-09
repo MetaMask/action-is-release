@@ -10,7 +10,7 @@ Check whether the current commit is a release or release rollback commit. Primar
 
 ## Basic usage
 
-This will look at the current commit, comparing it to `github.event.before` to see whether the `version` field of the `package.json` file in the root directory of the repository has changed. If the version has been upgraded, `COMMIT_TYPE` will be set to `release`. If the version has been downgraded, `COMMIT_TYPE` will be set to `release-rollback`. Otherwise, it will be set to nothing.
+This will look at the current commit, comparing it to `github.event.before` to see whether the `version` field of the `package.json` file in the root directory of the repository has changed. If the version has been upgraded, `COMMIT_TYPE` will be set to `release`. If the version has been downgraded, `COMMIT_TYPE` will be set to `release-rollback`. Otherwise, it will be set to `normal`.
 
 ```yaml
 jobs:
