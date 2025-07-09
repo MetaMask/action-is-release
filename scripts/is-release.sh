@@ -22,7 +22,7 @@ if [[ "$VERSION_AFTER" == "$VERSION_BEFORE" ]]; then
   exit 0
 else
   # Get the comparison result
-  COMPARISON_WITH_BEFORE="$(./scripts/compare-semver-versions.sh "$VERSION_AFTER" "$VERSION_BEFORE")"
+  COMPARISON_WITH_BEFORE="$(scripts/compare-semver-versions.sh "$VERSION_AFTER" "$VERSION_BEFORE")"
   
   if [[ "$COMPARISON_WITH_BEFORE" == "lt" ]]; then
     echo "Version downgraded, so this is a release rollback."
