@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- The action now detects whether the commit is a release rollback rather than a release per se
+  - A release rollback commit occurs when the version of the package is downgraded rather than bumped
+  - A new output, `COMMIT_TYPE`, has been added which can be either `release` (same as `IS_RELEASE=true`), `release-rollback`, or nothing
+
+### Deprecated
+
+- The `IS_RELEASE` output is deprecated; use `COMMIT_TYPE` instead
+
 ## [2.0.0]
 
 ### Changed
