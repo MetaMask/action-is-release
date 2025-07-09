@@ -67,6 +67,7 @@ elif semver-version-gt "$VERSION_BEFORE" "$VERSION_AFTER"; then
   echo "Version downgraded, so this is a release rollback."
   echo "IS_RELEASE=false" >> $GITHUB_OUTPUT
   echo "COMMIT_TYPE=release-rollback" >> $GITHUB_OUTPUT
+  exit 0
 elif [[ -n $COMMIT_STARTS_WITH ]]; then
   COMMIT_MESSAGE="$(git log --max-count=1 --format=%s)"
   match_found=false
