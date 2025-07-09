@@ -74,6 +74,9 @@ main() {
     echo "lt"  # prerelease < no prerelease
     return
   elif [[ -z "$v1_prerelease" && -z "$v2_prerelease" ]]; then
+    echo "eq"  # both have no prerelease
+    return
+  else
     # Both have prereleases, compare alphabetically
     if [[ "$v1_prerelease" > "$v2_prerelease" ]]; then
       echo "gt"
@@ -81,10 +84,11 @@ main() {
     elif [[ "$v1_prerelease" < "$v2_prerelease" ]]; then
       echo "lt"
       return
+    else
+      echo "eq"  # prereleases are equal
+      return
     fi
   fi
-
-  echo "eq"  # version1 == version2
 }
 
 if [[ $# -ne 2 ]]; then
