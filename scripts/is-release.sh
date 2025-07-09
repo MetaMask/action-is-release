@@ -59,7 +59,7 @@ semver-version-gt() {
 VERSION_BEFORE="$(git show "$BEFORE":package.json | jq --raw-output .version)"
 VERSION_AFTER="$(jq --raw-output .version package.json)"
 
-if "$VERSION_BEFORE" == "$VERSION_AFTER"; then
+if [[ "$VERSION_BEFORE" == "$VERSION_AFTER" ]]; then
   echo "Version unchanged, so this is not a release commit."
   echo "IS_RELEASE=false" >> $GITHUB_OUTPUT
   exit 0
