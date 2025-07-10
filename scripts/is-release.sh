@@ -4,6 +4,10 @@ set -x
 set -e
 set -o pipefail
 
+# Source the SemVer comparison utility
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/compare-semver-versions.sh"
+
 BEFORE="${1}"
 COMMIT_STARTS_WITH="${2}"
 
@@ -21,9 +25,9 @@ if [[ "$VERSION_AFTER" == "$VERSION_BEFORE" ]]; then
   echo "COMMIT_TYPE=normal" >> $GITHUB_OUTPUT
   exit 0
 else
-  # Get the comparison result
-  COMPARISON_WITH_BEFORE="$(scripts/compare-semver-versions.sh "$VERSION_AFTER" "$VERSION_BEFORE")"
-  
+  # Get the comparison result using the sourced function
+  COMPARISON_WITH_BEFORE="$(compare-semver-versions "$VERSION_AFTER" "$VERSION_BEFORE")"
+
   if [[ "$COMPARISON_WITH_BEFORE" == "lt" ]]; then
     echo "Version downgraded, so this is a release rollback."
     echo "IS_RELEASE=false" >> $GITHUB_OUTPUT

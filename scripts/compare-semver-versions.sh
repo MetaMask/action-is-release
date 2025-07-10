@@ -3,7 +3,7 @@
 set -euo pipefail
 
 # Returns: "gt" if version1 > version2, "lt" if version1 < version2, "eq" if version1 == version2
-main() {
+compare-semver-versions() {
   local version1="$1"
   local version2="$2"
 
@@ -91,10 +91,13 @@ main() {
   fi
 }
 
-if [[ $# -ne 2 ]]; then
-  echo "Usage: $0 <version1> <version2>"
-  echo "Returns: gt if version1 > version2, lt if version1 < version2, eq if version1 == version2"
-  exit 1
-fi
+# Only run main function if this script is called directly (not sourced)
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  if [[ $# -ne 2 ]]; then
+    echo "Usage: $0 <version1> <version2>"
+    echo "Returns: gt if version1 > version2, lt if version1 < version2, eq if version1 == version2"
+    exit 1
+  fi
 
-main "$@"
+  compare-semver-versions "$@"
+fi
