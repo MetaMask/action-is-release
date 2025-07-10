@@ -4,6 +4,10 @@ set -x
 set -e
 set -o pipefail
 
+# Source the SemVer comparison utility
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/compare-semver-versions.sh"
+
 BEFORE="${1}"
 COMMIT_STARTS_WITH="${2}"
 
@@ -14,11 +18,25 @@ fi
 
 VERSION_BEFORE="$(git show "$BEFORE":package.json | jq --raw-output .version)"
 VERSION_AFTER="$(jq --raw-output .version package.json)"
-if [[ "$VERSION_BEFORE" == "$VERSION_AFTER" ]]; then
-  echo "Notice: version unchanged. Skipping release."
+
+if [[ "$VERSION_AFTER" == "$VERSION_BEFORE" ]]; then
+  echo "Version unchanged, so this is not a release commit."
   echo "IS_RELEASE=false" >> $GITHUB_OUTPUT
+  echo "COMMIT_TYPE=normal" >> $GITHUB_OUTPUT
   exit 0
-elif [[ -n $COMMIT_STARTS_WITH ]]; then
+else
+  # Get the comparison result using the sourced function
+  COMPARISON_WITH_BEFORE="$(compare-semver-versions "$VERSION_AFTER" "$VERSION_BEFORE")"
+
+  if [[ "$COMPARISON_WITH_BEFORE" == "lt" ]]; then
+    echo "Version downgraded, so this is a release rollback."
+    echo "IS_RELEASE=false" >> $GITHUB_OUTPUT
+    echo "COMMIT_TYPE=release-rollback" >> $GITHUB_OUTPUT
+    exit 0
+  fi
+fi
+
+if [[ -n $COMMIT_STARTS_WITH ]]; then
   COMMIT_MESSAGE="$(git log --max-count=1 --format=%s)"
   match_found=false
 
@@ -32,10 +50,13 @@ elif [[ -n $COMMIT_STARTS_WITH ]]; then
   done
 
   if [[ $match_found == false ]]; then
-      echo "Notice: commit message does not start with \"${COMMIT_STARTS_WITH}\". Skipping release."
+      echo "Commit message does not start with \"${COMMIT_STARTS_WITH}\", so this is not a release commit."
       echo "IS_RELEASE=false" >> $GITHUB_OUTPUT
+      echo "COMMIT_TYPE=normal" >> $GITHUB_OUTPUT
       exit 0
   fi
 fi
 
+echo "This is a release commit!"
 echo "IS_RELEASE=true" >> $GITHUB_OUTPUT
+echo "COMMIT_TYPE=release" >> $GITHUB_OUTPUT

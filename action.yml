@@ -1,18 +1,21 @@
-name: 'Is this a release?'
-description: "This action checks to see if the .version key in a repository's package.json has changed in order to determine if this commit is a release commit"
+name: "Is this a release or a release rollback?"
+description: "This action checks to see if the .version key in a repository's package.json has changed in order to determine if this commit is a release or release rollback commit."
 
 inputs:
   commit-starts-with:
-    description: "Validate that the release commit starts with a string in this comma-separated list. Use '[version]' to refer to the current release version."
+    description: "If a release commit, validate that the message starts with a string in this comma-separated list. Use '[version]' to refer to the current release version."
     required: false
 
 outputs:
   IS_RELEASE:
-    description: 'Is this a release? can be either "true" or "false".'
+    description: 'Is this a release? Can be either "true" or "false". (Deprecated in favor of COMMIT_TYPE.)'
     value: ${{ steps.is-release.outputs.IS_RELEASE }}
+  COMMIT_TYPE:
+    description: 'What kind of commit is this? Can be "release", "release-rollback", or "normal".'
+    value: ${{ steps.is-release.outputs.COMMIT_TYPE }}
 
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - uses: actions/checkout@v4
       with:
