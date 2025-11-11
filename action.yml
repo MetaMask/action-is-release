@@ -6,6 +6,11 @@ inputs:
     description: "Validate that the release commit starts with a string in this comma-separated list. Use '[version]' to refer to the current release version."
     required: false
 
+  before:
+    description: "The commit SHA before the current commit."
+    required: false
+    default: ${{ github.event.before }}
+
 outputs:
   IS_RELEASE:
     description: 'Is this a release? can be either "true" or "false".'
@@ -21,4 +26,4 @@ runs:
         fetch-depth: 2
     - id: is-release
       shell: bash
-      run: ${{ github.action_path }}/scripts/is-release.sh "${{ github.event.before }}" "${{ inputs.commit-starts-with }}"
+      run: ${{ github.action_path }}/scripts/is-release.sh "${{ inputs.before }}" "${{ inputs.commit-starts-with }}"
