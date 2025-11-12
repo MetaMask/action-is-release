@@ -13,8 +13,11 @@ if [[ -z $BEFORE ]]; then
   exit 1
 fi
 
+git fetch origin "$BEFORE"
+
 VERSION_BEFORE="$(git show "$BEFORE":package.json | jq --raw-output .version)"
 VERSION_AFTER="$(jq --raw-output .version package.json)"
+
 if [[ "$VERSION_BEFORE" == "$VERSION_AFTER" ]]; then
   echo "Notice: version unchanged. Skipping release."
   echo "IS_RELEASE=false" >> $GITHUB_OUTPUT
