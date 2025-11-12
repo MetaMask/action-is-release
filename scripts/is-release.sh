@@ -6,6 +6,7 @@ set -o pipefail
 
 BEFORE="${1}"
 COMMIT_STARTS_WITH="${2}"
+COMMIT_MESSAGE="${3}"
 
 if [[ -z $BEFORE ]]; then
   echo "Error: Before SHA not specified."
@@ -19,7 +20,10 @@ if [[ "$VERSION_BEFORE" == "$VERSION_AFTER" ]]; then
   echo "IS_RELEASE=false" >> $GITHUB_OUTPUT
   exit 0
 elif [[ -n $COMMIT_STARTS_WITH ]]; then
-  COMMIT_MESSAGE="$(git log --max-count=1 --format=%s)"
+  if [[ -z $COMMIT_MESSAGE ]]; then
+    COMMIT_MESSAGE="$(git log --max-count=1 --format=%s)"
+  fi
+
   match_found=false
 
   IFS=',' read -ra RAW_PREFIXES <<< "${COMMIT_STARTS_WITH}"
