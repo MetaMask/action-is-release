@@ -31,4 +31,8 @@ runs:
         fetch-depth: 2
     - id: is-release
       shell: bash
-      run: ${{ github.action_path }}/scripts/is-release.sh "${{ inputs.before }}" "${{ inputs.commit-starts-with }}" "${{ inputs.commit-message }}"
+      env:
+        BEFORE: ${{ inputs.before }}
+        COMMIT_STARTS_WITH: ${{ inputs.commit-starts-with }}
+        COMMIT_MESSAGE: ${{ inputs.commit-message }}
+      run: ${{ github.action_path }}/scripts/is-release.sh
