@@ -4,10 +4,6 @@ set -x
 set -e
 set -o pipefail
 
-BEFORE="${1}"
-COMMIT_STARTS_WITH="${2}"
-COMMIT_MESSAGE="${3}"
-
 if [[ -z $BEFORE ]]; then
   echo "Error: Before SHA not specified."
   exit 1
@@ -20,7 +16,7 @@ VERSION_AFTER="$(jq --raw-output .version package.json)"
 
 if [[ "$VERSION_BEFORE" == "$VERSION_AFTER" ]]; then
   echo "Notice: version unchanged. Skipping release."
-  echo "IS_RELEASE=false" >> $GITHUB_OUTPUT
+  echo "IS_RELEASE=false" >> "$GITHUB_OUTPUT"
   exit 0
 elif [[ -n $COMMIT_STARTS_WITH ]]; then
   if [[ -z $COMMIT_MESSAGE ]]; then
@@ -40,9 +36,9 @@ elif [[ -n $COMMIT_STARTS_WITH ]]; then
 
   if [[ $match_found == false ]]; then
       echo "Notice: commit message does not start with \"${COMMIT_STARTS_WITH}\". Skipping release."
-      echo "IS_RELEASE=false" >> $GITHUB_OUTPUT
+      echo "IS_RELEASE=false" >> "$GITHUB_OUTPUT"
       exit 0
   fi
 fi
 
-echo "IS_RELEASE=true" >> $GITHUB_OUTPUT
+echo "IS_RELEASE=true" >> "$GITHUB_OUTPUT"
