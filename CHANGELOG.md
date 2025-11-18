@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.0]
+
+### Added
+
+- Add option to skip checkout ([#17](https://github.com/MetaMask/action-is-release/pull/17))
+  - This is useful when the action is used in a workflow that has already checked out the repository.
+
 ## [2.1.0]
 
 ### Added
@@ -28,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - This is a breaking change because `actions/checkout@v4` uses Node 20.
 - Support multiple commit prefixes ([#6](https://github.com/MetaMask/action-is-release/pull/6))
 
-[Unreleased]: https://github.com/MetaMask/action-is-release/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/MetaMask/action-is-release/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/MetaMask/action-is-release/releases/tag/v2.2.0
 [2.1.0]: https://github.com/MetaMask/action-is-release/releases/tag/v2.1.0
 [2.0.0]: https://github.com/MetaMask/action-is-release/releases/tag/v2.0.0
