@@ -1,0 +1,23 @@
+name: Build, Lint, and Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-lint-test:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run shellcheck
+        uses: fearphage/shellcheck-action@95d2a3d34d381a7314c286ea1725ca8cce3b51fd
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEBUG_ACTION: true
+
+  all-tests-pass:
+    runs-on: ubuntu-20.04
+    needs: build-lint-test
+    steps:
+      - run: echo "Great success"
