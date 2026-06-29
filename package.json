@@ -15,11 +15,14 @@
     "node": "^20 || ^22 || >=24"
   },
   "scripts": {
-    "lint:changelog": "auto-changelog validate"
+    "lint": "yarn lint:changelog",
+    "lint:fix": "yarn lint:changelog --fix",
+    "lint:changelog": "auto-changelog validate --formatter oxfmt"
   },
   "devDependencies": {
-    "@metamask/auto-changelog": "^3.0.0",
-    "@yarnpkg/types": "^4.0.1"
+    "@metamask/auto-changelog": "^6.1.1",
+    "@yarnpkg/types": "^4.0.1",
+    "oxfmt": "^0.45.0"
   },
   "packageManager": "yarn@4.16.0+sha256.ba05224324578801b9cc98170d64aa50b9a36733b440fb0942306da3fbbdc7d1"
 }
