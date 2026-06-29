@@ -1,0 +1,40 @@
+name: Build, Lint, and Test
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: yarn
+      - name: Install dependencies
+        run: yarn install
+      - name: Validate RC changelog
+        if: ${{ startsWith(github.head_ref, 'release/') }}
+        run: yarn lint:changelog --rc
+      - name: Validate changelog
+        if: ${{ !startsWith(github.head_ref, 'release/') }}
+        run: yarn lint:changelog
+      - name: Lint shell scripts
+        run: |
+          shellcheck scripts/is-release.sh \
+            .github/workflows/scripts/update-major-version-tag.sh
+      - name: Require clean working directory
+        shell: bash
+        run: |
+          if ! git diff --exit-code; then
+            echo "Working tree dirty at end of job"
+            exit 1
+          fi
