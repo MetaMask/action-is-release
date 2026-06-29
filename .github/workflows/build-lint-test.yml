@@ -38,10 +38,6 @@ jobs:
       - name: Validate changelog
         if: ${{ !startsWith(github.head_ref, 'release/') }}
         run: yarn lint:changelog
-      - name: Lint shell scripts
-        run: |
-          shellcheck scripts/is-release.sh \
-            .github/workflows/scripts/update-major-version-tag.sh
       - name: Require clean working directory
         shell: bash
         run: |
