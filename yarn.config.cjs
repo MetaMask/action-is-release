@@ -3,6 +3,8 @@ const { defineConfig } = require('@yarnpkg/types');
 const { basename } = require('path');
 
 /**
+ * Aliases for the Yarn type definitions, to make the code more readable.
+ *
  * @typedef {import('@yarnpkg/types').Yarn.Constraints.Yarn} Yarn
  * @typedef {import('@yarnpkg/types').Yarn.Constraints.Workspace} Workspace
  */
@@ -10,17 +12,28 @@ const { basename } = require('path');
 const BASE_URL = 'https://github.com/MetaMask/';
 
 /**
- * @param {Workspace} workspace
- * @returns {string}
+ * Get the name of the workspace. The workspace name is expected to be in the
+ * form `@metamask/workspace-name`, and this function will extract
+ * `workspace-name`.
+ *
+ * @param {Workspace} workspace - The workspace.
+ * @returns {string} The name of the workspace.
  */
 function getWorkspaceName(workspace) {
   return basename(workspace.ident);
 }
 
 /**
- * @param {Workspace} workspace
- * @param {string} field
- * @param {any} [value]
+ * Expect that the workspace has the given field, and that it is a non-null
+ * value. If the field is not present, or is null, this will log an error, and
+ * cause the constraint to fail.
+ *
+ * If a value is provided, this will also verify that the field is equal to the
+ * given value.
+ *
+ * @param {Workspace} workspace - The workspace to check.
+ * @param {string} field - The field to check.
+ * @param {any} [value] - The value to check.
  */
 function expectWorkspaceField(workspace, field, value) {
   const fieldValue = workspace.manifest[field];
@@ -28,13 +41,20 @@ function expectWorkspaceField(workspace, field, value) {
     workspace.error(`Missing required field "${field}".`);
     return;
   }
+
   if (value) {
     workspace.set(field, value);
   }
 }
 
 /**
- * @param {Workspace} workspace
+ * Expect that the workspace has a description, and that it is a non-null
+ * string. If the description is not present, or is null, this will log an
+ * error, and cause the constraint to fail.
+ *
+ * This will also verify that the description does not end with a period.
+ *
+ * @param {Workspace} workspace - The workspace to check.
  */
 function expectWorkspaceDescription(workspace) {
   expectWorkspaceField(workspace, 'description');
@@ -53,7 +73,10 @@ function expectWorkspaceDescription(workspace) {
 }
 
 /**
- * @param {Workspace} workspace
+ * Expect that the workspace has a package manager set, and that it is Yarn with
+ * a sha256 hash.
+ *
+ * @param {Workspace} workspace - The workspace to check.
  */
 function expectYarnPackageManager(workspace) {
   expectWorkspaceField(workspace, 'packageManager');
@@ -73,6 +96,12 @@ function expectYarnPackageManager(workspace) {
 }
 
 module.exports = defineConfig({
+  /**
+   * Define the constraints for this project.
+   *
+   * @param {object} args - The arguments.
+   * @param {Yarn} args.Yarn - The Yarn "global".
+   */
   async constraints({ Yarn }) {
     const workspace = Yarn.workspace();
     const workspaceName = getWorkspaceName(workspace);
