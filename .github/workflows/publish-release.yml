@@ -43,12 +43,16 @@ jobs:
         name: Get Slack final text
         shell: bash
         if: inputs.slack-subteam != ''
+        env:
+          NAME_VERSION: ${{ steps.name-hash.outputs.NAME_VERSION }}
+          REPOSITORY: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+          SUBTEAM: ${{ inputs.slack-subteam }}
         run: |
-          DEFAULT_TEXT="\`${{ steps.name-hash.outputs.NAME_VERSION }}\` is awaiting deployment :rocket: \n <https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/|→ Click here to review deployment>"
-          SUBTEAM_TEXT="${{ inputs.slack-subteam }}"
+          DEFAULT_TEXT="\`${NAME_VERSION}\` is awaiting deployment :rocket: \n <https://github.com/${REPOSITORY}/actions/runs/${RUN_ID}/|→ Click here to review deployment>"
           FINAL_TEXT="$DEFAULT_TEXT"
-          if [[ ! "$SUBTEAM_TEXT" == "" ]]; then
-            FINAL_TEXT="<!subteam^$SUBTEAM_TEXT> $DEFAULT_TEXT"
+          if [[ -n "$SUBTEAM" ]]; then
+            FINAL_TEXT="<!subteam^${SUBTEAM}> $DEFAULT_TEXT"
           fi
           echo "FINAL_TEXT=$FINAL_TEXT" >> "$GITHUB_OUTPUT"
       - name: Post to a Slack channel
