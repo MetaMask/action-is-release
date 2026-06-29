@@ -7,20 +7,31 @@ permissions:
   contents: read
 
 jobs:
+  prepare:
+    name: Prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.x]
+    steps:
+      - name: Checkout and setup environment
+        uses: MetaMask/action-checkout-and-setup@v3
+        with:
+          is-high-risk-environment: false
+          persist-credentials: false
+          node-version: ${{ matrix.node-version }}
+          cache-node-modules: true
+
   lint:
     name: Lint
+    needs: prepare
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Enable Corepack
-        run: corepack enable
-      - name: Install Node.js
-        uses: actions/setup-node@v4
+      - name: Checkout and setup environment
+        uses: MetaMask/action-checkout-and-setup@v3
         with:
-          node-version-file: '.nvmrc'
-          cache: yarn
-      - name: Install dependencies
-        run: yarn install
+          is-high-risk-environment: false
+          persist-credentials: false
       - name: Validate RC changelog
         if: ${{ startsWith(github.head_ref, 'release/') }}
         run: yarn lint:changelog --rc

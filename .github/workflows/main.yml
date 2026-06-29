@@ -13,7 +13,11 @@ jobs:
     name: Check workflows
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout and setup environment
+        uses: MetaMask/action-checkout-and-setup@v3
+        with:
+          is-high-risk-environment: false
+          persist-credentials: false
       - name: Download actionlint
         id: download-actionlint
         run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/914e7df21a07ef503a81201c76d2b11c789d3fca/scripts/download-actionlint.bash) 1.7.12
@@ -77,11 +81,11 @@ jobs:
           fi
 
   is-release:
-    # Filtering by `push` events ensures that we only release from the `main`
-    # branch, which is a requirement for our npm publishing environment.
-    # The commit author should always be 'github-actions' for releases created
-    # by the 'create-release-pr' workflow, so we filter by that as well to
-    # prevent accidentally triggering a release.
+    # Filtering by `push` events ensures that we only release from the `main` branch, which is a
+    # requirement for our npm publishing environment.
+    # The commit author should always be 'github-actions' for releases created by the
+    # 'create-release-pr' workflow, so we filter by that as well to prevent accidentally
+    # triggering a release.
     if: github.event_name == 'push' && startsWith(github.event.head_commit.author.name, 'github-actions')
     needs: all-jobs-pass
     outputs:
