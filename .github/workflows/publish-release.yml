@@ -27,7 +27,10 @@ jobs:
     name: Announce release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - id: name-hash
         name: Get Slack name and hash
         shell: bash
@@ -72,13 +75,13 @@ jobs:
       id-token: write
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Checkout and setup environment
+        uses: MetaMask/action-checkout-and-setup@v3
         with:
-          # This is to guarantee that the most recent tag is fetched, which we
-          # need for updating the shorthand major version tag.
-          fetch-depth: 0
+          is-high-risk-environment: true
+          persist-credentials: false
           ref: ${{ github.sha }}
+          skip-install: true
 
       - name: Get token
         id: get-token
