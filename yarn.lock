@@ -10,6 +10,7 @@ __metadata:
   resolution: "@metamask/action-is-release@workspace:."
   dependencies:
     "@metamask/auto-changelog": "npm:^3.0.0"
+    "@yarnpkg/types": "npm:^4.0.1"
   languageName: unknown
   linkType: soft
 
@@ -25,6 +26,15 @@ __metadata:
   bin:
     auto-changelog: dist/cli.js
   checksum: 10/70e98529a153ebeab10410dbc3f567014999f77ed82f2b52f1b36501b28a4e3614c809a90c89600a739d7710595bfecc30e2260410e6afac7539f8db65a48f2c
+  languageName: node
+  linkType: hard
+
+"@yarnpkg/types@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "@yarnpkg/types@npm:4.0.1"
+  dependencies:
+    tslib: "npm:^2.4.0"
+  checksum: 10/f391763cd955356e9aad551b29e8de7bbf68a6c8992af7cdc950ccf53f8aff6695ad81aa4c8a8e7c582786a840a4f30617732e2cb49f4109b971a9242c31c9fc
   languageName: node
   linkType: hard
 
@@ -273,6 +283,13 @@ __metadata:
   version: 2.0.0
   resolution: "strip-final-newline@npm:2.0.0"
   checksum: 10/69412b5e25731e1938184b5d489c32e340605bb611d6140344abc3421b7f3c6f9984b21dff296dfcf056681b82caa3bb4cc996a965ce37bcfad663e92eae9c64
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.4.0":
+  version: 2.8.1
+  resolution: "tslib@npm:2.8.1"
+  checksum: 10/3e2e043d5c2316461cb54e5c7fe02c30ef6dccb3384717ca22ae5c6b5bc95232a6241df19c622d9c73b809bea33b187f6dbc73030963e29950c2141bc32a79f7
   languageName: node
   linkType: hard
 

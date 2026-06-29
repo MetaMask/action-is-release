@@ -18,7 +18,8 @@
     "lint:changelog": "auto-changelog validate"
   },
   "devDependencies": {
-    "@metamask/auto-changelog": "^3.0.0"
+    "@metamask/auto-changelog": "^3.0.0",
+    "@yarnpkg/types": "^4.0.1"
   },
   "packageManager": "yarn@4.16.0+sha256.ba05224324578801b9cc98170d64aa50b9a36733b440fb0942306da3fbbdc7d1"
 }
