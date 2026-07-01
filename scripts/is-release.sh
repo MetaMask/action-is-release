@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
-set -x
 set -e
 set -o pipefail
+
+if [ "${RUNNER_DEBUG:-}" = "1" ]; then
+  set -x
+fi
 
 if [[ -z $BEFORE ]]; then
   echo "Error: Before SHA not specified."
