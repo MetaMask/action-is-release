@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.1]
+
+### Uncategorized
+
+- chore(deps): bump actions/checkout from 4 to 7 ([#23](https://github.com/MetaMask/action-is-release/pull/23))
+- chore: align GitHub Actions workflows with module template ([#19](https://github.com/MetaMask/action-is-release/pull/19))
+- chore: add Yarn configuration ([#21](https://github.com/MetaMask/action-is-release/pull/21))
+- chore: add standard repo config files ([#20](https://github.com/MetaMask/action-is-release/pull/20))
+
 ## [2.2.0]
 
 ### Added
@@ -35,7 +44,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - This is a breaking change because `actions/checkout@v4` uses Node 20.
 - Support multiple commit prefixes ([#6](https://github.com/MetaMask/action-is-release/pull/6))
 
-[Unreleased]: https://github.com/MetaMask/action-is-release/compare/v2.2.0...HEAD
+[Unreleased]: https://github.com/MetaMask/action-is-release/compare/v2.2.1...HEAD
+[2.2.1]: https://github.com/MetaMask/action-is-release/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/MetaMask/action-is-release/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/MetaMask/action-is-release/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/MetaMask/action-is-release/releases/tag/v2.0.0

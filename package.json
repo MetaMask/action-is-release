@@ -1,6 +1,6 @@
 {
   "name": "@metamask/action-is-release",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "A GitHub Action that checks whether a commit is a release commit",
   "license": "MIT",
   "homepage": "https://github.com/MetaMask/action-is-release#readme",
