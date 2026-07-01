@@ -9,12 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.2.1]
 
-### Uncategorized
+### Changed
 
-- chore(deps): bump actions/checkout from 4 to 7 ([#23](https://github.com/MetaMask/action-is-release/pull/23))
-- chore: align GitHub Actions workflows with module template ([#19](https://github.com/MetaMask/action-is-release/pull/19))
-- chore: add Yarn configuration ([#21](https://github.com/MetaMask/action-is-release/pull/21))
-- chore: add standard repo config files ([#20](https://github.com/MetaMask/action-is-release/pull/20))
+- Bump `actions/checkout` from `4` to `7` ([#23](https://github.com/MetaMask/action-is-release/pull/23))
 
 ## [2.2.0]
 
