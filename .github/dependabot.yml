@@ -1,0 +1,30 @@
+# Please see the documentation for all configuration options:
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+      time: '06:00'
+    cooldown:
+      default-days: 3
+    allow:
+      - dependency-name: '@metamask/*'
+    target-branch: 'main'
+    versioning-strategy: 'increase-if-necessary'
+    open-pull-requests-limit: 10
+
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+      time: '06:00'
+    cooldown:
+      default-days: 3
+    allow:
+      - dependency-name: 'MetaMask/*'
+      - dependency-name: 'actions/*'
+    target-branch: 'main'
+    open-pull-requests-limit: 10
